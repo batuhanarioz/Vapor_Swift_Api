@@ -17,7 +17,19 @@ public func configure(_ app: Application) async throws {
         tls: .prefer(try .init(configuration: .clientDefault)))
     ), as: .psql)
 
-    app.migrations.add(CreateTodo())
+    // MARK: Migration Setup
+    
+    app.migrations.add(UserModelMigration())
+    app.migrations.add(TokenModelMigration())
+    app.migrations.add(CourseModelMigration())
+    app.migrations.add(SessionModelMigration())
+    app.migrations.add(GuideModelMigration())
+    app.migrations.add(ArticleModelMigration())
+    
+    // MARK: Seed Setup
+    
+    app.migrations.add(CreateUserSeed())
+    
     // register routes
     try routes(app)
 }
